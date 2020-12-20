@@ -119,8 +119,8 @@ draw = function() {
         var angle = 42;
         var sizeChange = 0.10;
         var w=120;
-        arc(width/2+w/4,height*6.2/8*(0.9-i*limbSpacing),w*(1-i*sizeChange),w*(1-i*sizeChange),angle,180+angle);
-        arc(width/2-w/4,height*6.2/8*(0.9-i*limbSpacing),w*(1-i*sizeChange),w*(1-i*sizeChange),-angle,180-angle);
+        arc(width/2+w/4,height*6.2/8*(0.9-i*limbSpacing),w*(1-i*sizeChange),w*(1-i*sizeChange),180+angle,angle);
+        arc(width/2-w/4,height*6.2/8*(0.9-i*limbSpacing),w*(1-i*sizeChange),w*(1-i*sizeChange),180-angle,-angle);
     }
 
     // draw the snow on loop
