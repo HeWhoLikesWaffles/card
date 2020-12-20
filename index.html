@@ -120,20 +120,6 @@ draw = function() {
         triangle(width/2,height*5.5/8*(0.9-i*limbSpacing),width/2,height*7.4/8*(0.9-i*limbSpacing),width/2-w*(1-i*sizeChange),height*7.7/8*(0.9-i*limbSpacing));
         triangle(width/2,height*5.5/8*(0.9-i*limbSpacing),width/2,height*7.4/8*(0.9-i*limbSpacing),width/2+w*(1-i*sizeChange),height*7.7/8*(0.9-i*limbSpacing));
     }
-
-    // draw the snow on loop
-    noStroke();
-    fill(0, 200, 255);
-    for (var i = 0; i < bubbles.length; i++) {
-        bubbles[i].display();
-        bubbles[i].yPos += bubbles[i].yVel;
-        if (bubbles[i].yPos > height+20){
-            bubbles[i].xPos=round(random(0,width));
-            bubbles[i].yPos=round(random(-200,0));
-            bubbles[i].yVel=random(yVelMin,yVelMax);
-            bubbles[i].size=round(random(sizeMin,sizeMax));
-        }
-    }
     
     t=t+0.01;
     if (t>0.5) {
@@ -152,6 +138,20 @@ draw = function() {
     
     for (var i = 0; i < treelights.length; i++) {
             treelights[i].display();
+    }
+    
+    // draw the snow on loop
+    noStroke();
+    fill(0, 200, 255);
+    for (var i = 0; i < bubbles.length; i++) {
+        bubbles[i].display();
+        bubbles[i].yPos += bubbles[i].yVel;
+        if (bubbles[i].yPos > height+20){
+            bubbles[i].xPos=round(random(0,width));
+            bubbles[i].yPos=round(random(-200,0));
+            bubbles[i].yVel=random(yVelMin,yVelMax);
+            bubbles[i].size=round(random(sizeMin,sizeMax));
+        }
     }
     
     fill(255,255,255);
