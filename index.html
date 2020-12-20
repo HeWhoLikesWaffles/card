@@ -27,64 +27,144 @@ https://github.com/Team-Code/KA_Offline -->
 	     
 	     
 	     
- // scalar variables
-var yVelMin=0.5;
-var yVelMax=2;
-var sizeMin=20;
-var sizeMax=60;
-var nbubbles=100;
-var i;
+// scalar variables
+var yVelMin = 1;
+var yVelMax = 3;
+var sizeMin = 20;
+var sizeMax = 25;
+var nFlakes = 200;
+var nLights = 10;
 
-// array variables
-var xPositions = [round(random(0,width))];
-var yPositions = [round(random(height,height+200))];
-var yVelocities = [random(yVelMin,yVelMax)];
-var bubbleSizes = [round(random(sizeMin,sizeMax))];
+// array of objects; initialize empty
+var bubbles = [];
 
-// initialize arrays
-for (i=0; i<nbubbles; i++) {
-    xPositions.push(round(random(0,width)));
-    yPositions.push(round(random(height,height+200)));
-    yVelocities.push(random(yVelMin,yVelMax));
-    bubbleSizes.push(round(random(sizeMin,sizeMax)));
-}
+// create Bubble object class
+var Bubble = function() {
+    this.xPos = round(random(0,width));
+    this.yPos = -1*round(random(0,200));
+    this.yVel = random(yVelMin,yVelMax);
+    this.size = round(random(sizeMin,sizeMax));
+    this.rgb = [1,1,1];
+};
 
-// function for drawing bubbles
-var drawbubble=function(bubbleSize,xPos,yPos){
+// function for drawing Bubbles
+Bubble.prototype.display=function(){
     var bubbleColor=20;
-    var bubbleSize;
-    var xPos;
-    var yPos;
     
     while (bubbleColor<256) {
-        fill(0,bubbleColor*4+21,bubbleColor*4+84);
-        ellipse(xPos,yPos,bubbleSize-bubbleColor,bubbleSize-bubbleColor);
-        bubbleColor+=round(bubbleSize/10); // sets gradient
+        fill(bubbleColor*4+this.rgb[0]*200,bubbleColor*4+this.rgb[1]*200,bubbleColor*4+this.rgb[2]*200);
+        ellipse(this.xPos,this.yPos,this.size-bubbleColor,this.size-bubbleColor);
+        bubbleColor+=round(this.size/10); // sets gradient
     }
 };
 
-// draw the bubbles!
-draw = function() {
-    background(0, 21, 84);
+// initialize array for snowflakes
+for (var i=0; i<nFlakes; i++) {
+    bubbles.push({});
+    bubbles[i] = new Bubble();
+    bubbles[i].xPos = round(random(0,width));
+    bubbles[i].yPos = -1*round(random(0,200));
+    bubbles[i].yVel = random(yVelMin,yVelMax);
+    bubbles[i].size = round(random(sizeMin,sizeMax));
+}
 
+// array for lights
+var treelights=[]; var i=0;
+
+var xPosArray=[200, 222, 180, 217, 247, 184, 253, 155, 220, 178, 155, 225, 200, 170, 250];
+var yPosArray=[320, 180, 200, 207, 193, 170, 265, 270, 290, 240, 200, 235, 270, 310, 315];
+
+for (var i = 0; i < xPosArray.length; i++) {
+    // add object to lights array
+    treelights.push({});
+    treelights[i] = new Bubble();
+    
+    // fix velociy and size
+    treelights[i].yVel=0;
+    treelights[i].size=40;
+    
+    // set x/y positions to array values
+    treelights[i].xPos = xPosArray[i];
+    treelights[i].yPos = yPosArray[i];
+    
+    // generate random number to randomly set light color
+    var randNum = round(random(0,2));
+    
+    // set light color through object property
+    treelights[i].rgb = [0,0,0];
+    treelights[i].rgb[randNum] = 1;
+}
+
+// draw the image on loop
+var t=0; // time variable
+draw = function() {
+    // draw sky
+    background(0, 21, 84);
+    
+    // draw the ground
+    fill(255,255,255);
+    rect(0,height*3/4,width,height/4);
+    
+        // draw trunk / roots
+    fill(82, 59, 6);
+    arc(width/2+30,height*7/8,70,70,45,225);
+    arc(width/2-30,height*7/8,70,70,-45,135);
+    fill(255,255,255);
+    triangle(width/2,height*7/8,width/2+120,height,width/2-120,height);
+    
+    // draw limbs
+    fill(21, 117, 5);
+    for (var i = 0; i < 4; i++) {
+        var limbSpacing = 0.12;
+        var angle = 42;
+        var sizeChange = 0.10;
+        var w=120;
+        arc(width/2+w/4,height*6.2/8*(0.9-i*limbSpacing),w*(1-i*sizeChange),w*(1-i*sizeChange),angle,180+angle);
+        arc(width/2-w/4,height*6.2/8*(0.9-i*limbSpacing),w*(1-i*sizeChange),w*(1-i*sizeChange),-angle,180-angle);
+    }
+
+    // draw the snow on loop
     noStroke();
     fill(0, 200, 255);
-
-    for (i = 0; i < xPositions.length; i++) {
-        drawbubble(bubbleSizes[i], xPositions[i], yPositions[i]);
-        yPositions[i] -= yVelocities[i];
-        if (yPositions[i]<-20){
-            xPositions[i]=round(random(0,width));
-            yPositions[i]=round(random(height,height+200));
-            yVelocities[i]=random(yVelMin,yVelMax);
-            bubbleSizes[i]=round(random(sizeMin,sizeMax));
+    for (var i = 0; i < bubbles.length; i++) {
+        bubbles[i].display();
+        bubbles[i].yPos += bubbles[i].yVel;
+        if (bubbles[i].yPos > height+20){
+            bubbles[i].xPos=round(random(0,width));
+            bubbles[i].yPos=round(random(-200,0));
+            bubbles[i].yVel=random(yVelMin,yVelMax);
+            bubbles[i].size=round(random(sizeMin,sizeMax));
         }
     }
     
+    t=t+0.01;
+    if (t>0.5) {
+        for (var i = 0; i < treelights.length; i++) {
+            // generate random number to randomly set light color
+            var randNum = round(random(0,2));
+            
+            // set light color through object property
+            treelights[i].rgb = [0,0,0];
+            treelights[i].rgb[randNum] = 1;
+            
+            // reset t
+            t=0;
+        }
+    }
+    
+    for (var i = 0; i < treelights.length; i++) {
+            treelights[i].display();
+    }
+    
+    fill(255,255,255);
+    textSize(30);
+    text("May your Christmas",30,30);
+    text("be as stupid as my life",30,60);
 };
+	     
+	     
+	     
     }};
-	 
-	 
 
     // Get the canvas that Processing-js will use
     var canvas = document.getElementById("mycanvas"); 
