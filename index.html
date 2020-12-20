@@ -88,7 +88,7 @@ for (var i = 0; i < xPosArray.length; i++) {
     treelights[i].yPos = yPosArray[i];
     
     // generate random number to randomly set light color
-    var randNum = round(random(0,2));
+    var randNum = floor(random(0,3));
     
     // set light color through object property
     treelights[i].rgb = [0,0,0];
@@ -139,7 +139,7 @@ draw = function() {
     if (t>0.5) {
         for (var i = 0; i < treelights.length; i++) {
             // generate random number to randomly set light color
-            var randNum = round(random(0,2));
+            var randNum = floor(random(0,3));
             
             // set light color through object property
             treelights[i].rgb = [0,0,0];
