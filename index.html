@@ -24,16 +24,67 @@ https://github.com/Team-Code/KA_Offline -->
         frameRate(30);
         
         // ProgramCodeGoesHere
-        fill(255, 255, 0);
-        ellipse(200, 200, 200, 200);
-        noFill();
-        stroke(0, 0, 0);
-        strokeWeight(2);
-        arc(200, 200, 150, 100, 0, PI);
-        fill(0, 0, 0);
-        ellipse(250, 200, 10, 10);
-        ellipse(153, 200, 10, 10);
+	     
+	     
+	     
+ // scalar variables
+var yVelMin=0.5;
+var yVelMax=2;
+var sizeMin=20;
+var sizeMax=60;
+var nbubbles=100;
+var i;
+
+// array variables
+var xPositions = [round(random(0,width))];
+var yPositions = [round(random(height,height+200))];
+var yVelocities = [random(yVelMin,yVelMax)];
+var bubbleSizes = [round(random(sizeMin,sizeMax))];
+
+// initialize arrays
+for (i=0; i<nbubbles; i++) {
+    xPositions.push(round(random(0,width)));
+    yPositions.push(round(random(height,height+200)));
+    yVelocities.push(random(yVelMin,yVelMax));
+    bubbleSizes.push(round(random(sizeMin,sizeMax)));
+}
+
+// function for drawing bubbles
+var drawbubble=function(bubbleSize,xPos,yPos){
+    var bubbleColor=20;
+    var bubbleSize;
+    var xPos;
+    var yPos;
+    
+    while (bubbleColor<256) {
+        fill(0,bubbleColor*4+21,bubbleColor*4+84);
+        ellipse(xPos,yPos,bubbleSize-bubbleColor,bubbleSize-bubbleColor);
+        bubbleColor+=round(bubbleSize/10); // sets gradient
+    }
+};
+
+// draw the bubbles!
+draw = function() {
+    background(0, 21, 84);
+
+    noStroke();
+    fill(0, 200, 255);
+
+    for (i = 0; i < xPositions.length; i++) {
+        drawbubble(bubbleSizes[i], xPositions[i], yPositions[i]);
+        yPositions[i] -= yVelocities[i];
+        if (yPositions[i]<-20){
+            xPositions[i]=round(random(0,width));
+            yPositions[i]=round(random(height,height+200));
+            yVelocities[i]=random(yVelMin,yVelMax);
+            bubbleSizes[i]=round(random(sizeMin,sizeMax));
+        }
+    }
+    
+};
     }};
+	 
+	 
 
     // Get the canvas that Processing-js will use
     var canvas = document.getElementById("mycanvas"); 
