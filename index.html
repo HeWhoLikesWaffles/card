@@ -1,138 +1,44 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Recipe book</title>
-        <meta charset="utf-8">
-        <style>
-            body {
-                background-color: rgb(0, 0, 0);
-                color: rgb(142, 152, 209);
-            }
-            p {
-                color: rgb(255, 255, 255);
-            }
-            #source {
-                color: rgb(196, 12, 168);
-            }
-        </style>
-    </head>
-    <body>
-       
-        <h1>Jethro's Cook Book : </h1>
-        <h1>Recipes for Human Men (and Women)</h1>
+<!-- This is based on DillingerLee's great template here:
+https://github.com/Team-Code/KA_Offline -->
+<html> 
+ <head>
+    <title>Processing.JS inside Webpages: Template</title> 
+</head>
+ <body>
+    <p align="center"> 
+	<!--This draws the Canvas on the webpage -->
+      <canvas id="mycanvas"></canvas> 
+    </p>
+ </body>
+ 
+ <!-- Run all the JavaScript stuff -->
+ <!-- Include the processing.js library -->
+ <!-- See https://khanacademy.zendesk.com/hc/en-us/articles/202260404-What-parts-of-ProcessingJS-does-Khan-Academy-support- for differences -->
+ <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
+ 
+ <script>
+    var sketchProc = function(processingInstance) {
+     with (processingInstance) {
+        size(400, 400); 
+        frameRate(30);
         
-        <h2>Table of Contents:</h2>
-        
-        <ol>
-            <li><a href="#chicken">Chicken that has been baked in a dish</a></li>
-            <li><a href="#water">Boiled water</a></li>
-            <li><a href="#poptarts">Pop Tarts</a></li>
-        </ol>
-        
-        <h2 id="chicken">Chicken that has been baked in a dish</h2>
-        
-        <ul>
-            <li>Time: somewhat less than a fortnight</li>
-            <li>Serves: 1</li>
-        </ul>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Ingredient</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Baking dish</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>Chicken</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>Oven</td>
-                    <td>1</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <p><strong>Step 1:</strong> Preheat the oven to 450 degrees Fahrenheit.</p>
-        <p><strong>Step 2:</strong> Remove the bag containing the chicken's endocrine system from the chicken.</p>
-        <p><strong>Step 2:</strong> Place the chicken (sans endocrine system) into the clean dish.</p>
-        <p><strong>Step 3:</strong> Place the chicken inside of the preheated oven without burning yourself.</p>
-        <p><strong>Step 4:</strong> Remove the cooked chicken from the oven without burning yourself.</p>
-        <p><strong>Step 5:</strong> Verify the chicken's doneness by probing it with an instrument.</p>
-        <p><strong>Step 6:</strong> Consume.</p>
-        
-    <h2 id="water">Boiled water</h2>
-        
-        <ul>
-            <li>Time: less than the time it takes for light to travel one lightyear in a vacuum</li>
-            <li>Serves: 1</li>
-        </ul>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Ingredient</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Cooking pot</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>Water</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>Stovetop</td>
-                    <td>1</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <p><strong>Step 1:</strong> Turn on one of the stovetop's burners.</p>
-        <p><strong>Step 2:</strong> Fill the cooking pot with clean water, e.g. from a faucet.</p>
-        <p><strong>Step 3:</strong> Place the water-filled pot on the burner and leave it there until it is boiled.</p>
-        <p><strong>Step 3:</strong> Consume.</p>
-        
-        <h2 id="poptarts">Pop Tarts</h2>
-        
-        <ul>
-            <li>Time: between 0 and infinity</li>
-            <li>Serves: 1</li>
-        </ul>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Ingredient</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Pop Tart(s)</td>
-                    <td>1 or 2</td>
-                </tr>
-                <tr>
-                    <td>Toaster</td>
-                    <td>1</td>
-                </tr>
-            </tbody>
-        </table>
-        
-                <p><strong>Step 1:</strong> Toast the Pop Tart(s).</p>
-                <p><strong>Step 2:</strong> Go ahead, toast them.</p>
-                <p><strong>Step 3:</strong> Consume.</p>
-        
-    <p id="source"><em>Source: <a href="https://www.foodnetwork.com">The Food Network</a></em></p>
-    
-    </body>
+        // ProgramCodeGoesHere
+        fill(255, 255, 0);
+        ellipse(200, 200, 200, 200);
+        noFill();
+        stroke(0, 0, 0);
+        strokeWeight(2);
+        arc(200, 200, 150, 100, 0, PI);
+        fill(0, 0, 0);
+        ellipse(250, 200, 10, 10);
+        ellipse(153, 200, 10, 10);
+    }};
+
+    // Get the canvas that Processing-js will use
+    var canvas = document.getElementById("mycanvas"); 
+    // Pass the function sketchProc (defined in myCode.js) to Processing's constructor.
+    var processingInstance = new Processing(canvas, sketchProc); 
+ </script>
+
 </html>
